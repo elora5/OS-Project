@@ -1,0 +1,24 @@
+How it works:
+
+Inputs: width height xmin xmax ymin ymax max_iters output.ppm
+
+Mapping: Pixel (px, py) → complex c = cr + i*ci, where
+cr = xmin + px/(width-1) * (xmax - xmin)
+ci = ymax - py/(height-1) * (ymax - ymin) (top of image = positive imaginary)
+
+Iteration: Start z = 0. Repeat z = z*z + c until |z| > 2 or iter == max_iters.
+
+Color (grayscale): Fewer iterations ⇒ brighter, more iterations ⇒ darker.
+If iter == max_iters (didn’t escape): black. Else: val = 255 - 255*iter/max_iters.
+
+Parallelism: Spawn exactly 8 threads. Each thread computes every 8th row (row % 8 == tid), so work is well balanced and lock-free (each thread writes to distinct rows).
+
+Output: PPM P6 (binary) for compact size:
+Header:
+
+P6
+<width> <height>
+255
+
+
+followed by raw RGB bytes.

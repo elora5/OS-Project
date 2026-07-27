@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.os.cpuscheduling.cpuscheduling.HelloController">
+    <top>
+        <ToolBar>
+            <CheckBox fx:id="preemptiveCheck" text="Preemptive"/>
+            <Button text="Add Queue" onAction="#onAddQueue"/>
+            <Button text="Add Process" onAction="#onAddProcess"/>
+            <Separator/>
+            <Button text="Step" onAction="#onStep"/>
+            <Button text="Run 10" onAction="#onRunTen"/>
+            <Button text="Reset" onAction="#onReset"/>
+            <Label text="Time:"/>
+            <Label fx:id="timeLabel" text="0"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <SplitPane orientation="VERTICAL">
+            <items>
+                <SplitPane>
+                    <items>
+                        <VBox spacing="6.0" BorderPane.alignment="CENTER">
+                            <padding>
+                                <Insets left="10" right="10" top="10" bottom="10"/>
+                            </padding>
+                            <Label text="Queues"/>
+                            <TableView fx:id="queuesTable" prefHeight="160">
+                                <columns>
+                                    <TableColumn text="Name">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="name"/>
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="Level">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="priorityLevel"/>
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="Algorithm">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="algorithm"/>
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="Quantum">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="timeQuantum"/>
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <VBox spacing="6.0">
+                            <padding>
+                                <Insets left="10" right="10" top="10" bottom="10"/>
+                            </padding>
+                            <Label text="Processes"/>
+                            <TableView fx:id="processTable" prefHeight="160">
+                                <columns>
+                                    <TableColumn text="PID">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="id"/>
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="Arrival">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="arrivalTime"/>
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="Burst">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="totalBurstTime"/>
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="Priority">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="priority"/>
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </items>
+                </SplitPane>
+
+                <HBox spacing="20">
+                    <padding>
+                        <Insets left="10" right="10" top="10" bottom="10"/>
+                    </padding>
+                    <VBox spacing="6">
+                        <Label text="Current"/>
+                        <Label fx:id="currentLabel" text="Idle"/>
+                    </VBox>
+                    <VBox spacing="6">
+                        <Label text="Metrics"/>
+                        <GridPane hgap="10" vgap="6">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="40"/>
+                                <ColumnConstraints percentWidth="60"/>
+                            </columnConstraints>
+                            <children>
+                                <Label text="CPU Utilization" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                <Label fx:id="utilLabel" text="0%" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                <Label text="Throughput" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                <Label fx:id="throughputLabel" text="0" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                <Label text="Avg Turnaround" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                <Label fx:id="tatLabel" text="0" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <Label text="Avg Waiting" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                                <Label fx:id="waitLabel" text="0" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                                <Label text="Avg Response" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                                <Label fx:id="respLabel" text="0" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                            </children>
+                        </GridPane>
+                    </VBox>
+                </HBox>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>

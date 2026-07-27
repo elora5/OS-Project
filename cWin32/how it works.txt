@@ -1,0 +1,11 @@
+How the implementation works (brief)
+
+API: GetCursorPos(&POINT) from User32 gives you global screen coordinates of the cursor in pixels.
+
+Loop: A simple while loop polls the cursor, prints it with \r to rewrite the same line, and sleeps N ms with Sleep(N) to control the refresh rate and CPU usage.
+
+Resilience:
+
+SetConsoleCtrlHandler lets us exit cleanly on Ctrl+C or window close.
+
+SetConsoleMode removes ENABLE_QUICK_EDIT_MODE and ENABLE_MOUSE_INPUT so the console never suspends the process when clicked/selected.

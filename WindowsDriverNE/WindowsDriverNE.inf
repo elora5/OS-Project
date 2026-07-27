@@ -1,0 +1,62 @@
+;
+; WindowsDriverNE.inf
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System ; TODO: specify appropriate Class
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318} ; TODO: specify appropriate ClassGuid
+Provider    = %ManufacturerName%
+CatalogFile = WindowsDriverNE.cat
+DriverVer   = ; TODO: set DriverVer in stampinf property pages
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+WindowsDriverNE.sys  = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName% = Standard,NT$ARCH$.10.0...16299 ; %13% support introduced in build 16299
+
+[Standard.NT$ARCH$.10.0...16299]
+%WindowsDriverNE.DeviceDesc% = WindowsDriverNE_Device, Root\WindowsDriverNE ; TODO: edit hw-id
+
+[WindowsDriverNE_Device.NT]
+CopyFiles = File_Copy
+
+[File_Copy]
+WindowsDriverNE.sys
+
+;-------------- Service installation
+[WindowsDriverNE_Device.NT.Services]
+AddService = WindowsDriverNE,%SPSVCINST_ASSOCSERVICE%, WindowsDriverNE_Service_Inst
+
+; -------------- WindowsDriverNE driver install sections
+[WindowsDriverNE_Service_Inst]
+DisplayName    = %WindowsDriverNE.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\WindowsDriverNE.sys
+
+[WindowsDriverNE_Device.NT.Wdf]
+KmdfService = WindowsDriverNE, WindowsDriverNE_wdfsect
+
+[WindowsDriverNE_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+ManufacturerName = "<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+DiskName = "WindowsDriverNE Installation Disk"
+WindowsDriverNE.DeviceDesc = "WindowsDriverNE Device"
+WindowsDriverNE.SVCDESC = "WindowsDriverNE Service"

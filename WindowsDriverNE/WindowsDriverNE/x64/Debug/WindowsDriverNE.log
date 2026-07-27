@@ -1,0 +1,1 @@
+﻿C:\Users\hasin\OneDrive\Documents\GitHub\OS-Mandatory\WindowsDriverNE\WindowsDriverNE.vcxproj(158,2): error MSB4019: The imported project "C:\build\WindowsDriver.Targets" was not found. Confirm that the expression in the Import declaration "$(WDK_DIR)\build\WindowsDriver.Targets", which evaluated to "\build\WindowsDriver.Targets", is correct, and that the file exists on disk.
